@@ -1,0 +1,26 @@
+server:
+  port: 9190
+
+spring:
+  cloud:
+    compatibility-verifier:
+      enabled: false
+  h2:
+    console:
+      enabled: true
+  application:
+    name: ORDER-SERVICE
+  config:
+    import: "optional:configserver:"
+  kafka:
+    bootstrap-servers: localhost:9092
+    topic:
+      name: order-topics
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.LongSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+logging:
+  file:
+    name: /Users/xzhou/Downloads/logs/microservice.log
+

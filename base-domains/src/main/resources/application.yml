@@ -1,0 +1,11 @@
+server:
+  port: 8988
+
+spring:
+  application:
+    name: BASE-DOMAINS
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/b33m0/demo-cloud-config-server

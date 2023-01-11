@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: CLIENT-SERVICE
+#  zipkin:
+#    base-url: http://127.0.0.1:9411/
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/b33m0/demo-cloud-config-server
+
+server:
+  port: 9197
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"

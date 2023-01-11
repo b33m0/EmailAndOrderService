@@ -1,0 +1,42 @@
+server:
+  port: 8989
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: ORDER-SERVICE
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/order/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: ORDER-SERVICE
+                fallbackuri: forward:/orderServiceFallBack
+        - id: EMAIL-SERVICE
+          uri: lb://EMAIL-SERVICE
+          predicates:
+            - Path=/sendEmail/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: EMAIL-SERVICE
+                fallbackuri: forward:/emailServiceFallBack
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
